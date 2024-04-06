@@ -1,0 +1,113 @@
+body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0%;
+    /* background-color: pink; */
+    width: 100%;
+}
+
+#title{
+    width: 100%;
+    height: 50px;
+    background-image: linear-gradient(45deg, #600000 30%, #959595 20%);
+    border-bottom:black 7px solid ;
+}
+
+#title h2{
+    color: white;
+    padding-left: 20px;
+    padding-top: 10px;
+    font-size: 18pt;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.title--grid{
+    display: grid;
+    grid-template-columns: 470px 470px 470px 470px;
+    grid-template-rows: 10px 10px;
+    
+}
+
+.title--grid #signout{
+    padding-top: 10px;
+    padding-left: 400px;
+    grid-column: 3/4;
+    grid-row: 1 / 2;
+    color: white;
+}
+
+.container--grid{
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(4,150px);
+    grid-template-rows: repeat(4,150px);
+    background-color: white;
+    padding-top: 50px;
+}
+
+
+.footercontainer {
+    background-color: #600000;
+    border-bottom:50px solid #959595;
+    width: 100%;
+    height: 200px;
+    border-top: 8px solid black;
+    position:absolute;
+    bottom: 0;
+}
+.grid-item button {
+    width: 200px; /* Set to the width of the largest button */
+    height: 50px; /* Set to the height of the largest button */
+    border: 2px solid black;
+    text-align: center;
+    background-color: #959595;;
+}
+
+.footercontainer h3{
+    padding-top: 10px;
+    padding-left: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-style: normal;
+}
+
+.footercontainer h6{
+    width: 100%;
+    padding-top: 72px;
+    padding-bottom: 0px;
+    padding-left: 50px;
+    font-family: 'Times New Roman', Times, serif;
+    color: white;
+    font-style: normal;
+}
+
+* {
+    box-sizing: border-box;
+  }
+  
+  .wrapper {
+    justify-content: center;
+    border: 2px solid #f76707;
+    border-radius: 5px;
+    background-color: #fff4e6;
+  }
+  
+  .wrapper > div {
+    border: 2px solid #ffa94d;
+    border-radius: 5px;
+    background-color: #ffd8a8;
+    padding: 1em;
+    color: #d9480f;
+  }
+  
+  .wrapper {
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .btn {
+    margin-top: 200px;
+  }
