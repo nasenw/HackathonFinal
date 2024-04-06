@@ -1,4 +1,6 @@
 const sequelize = require('../db')
+const bcrypt = require('bcrypt');
+
 const { Model, DataTypes } = require('sequelize')
 
 class User extends Model {
@@ -63,8 +65,8 @@ class User extends Model {
           }
         });
         
-        
-        if(user && user.password === password){
+        const validPass = await bcrypt.compare(password, user.password);
+        if(user && validPass){
             return true
         }else{
             return false
