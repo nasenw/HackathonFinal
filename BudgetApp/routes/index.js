@@ -1,6 +1,8 @@
 var express = require('express');
 const User = require('../models/User');
 const Board = require('../models/Board');
+const bcrypt = require('bcrypt');
+
 var router = express.Router();
 
 const sessionChecker = (req, res, next)=>{
@@ -33,11 +35,15 @@ router.post('/user-signedup', async function(req, res, next) {
   console.log(existing + "Yooo");
   if (existing == null)
   {
+    const saltRounds = 10;
+    const salt = await bcrypt.genSalt(saltRounds);
+    const hashedPassword = await bcrypt.hash(req.body.password, salt);
+
     const user = await User.create({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
   })
   }
   else {
