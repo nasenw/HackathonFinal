@@ -14,28 +14,21 @@
     <div id="title">
         <div class="title--grid">
             <h2>CampusCommerce</h2>
-            <a id="signout" href="https://www.mccormick.northwestern.edu/academics/apply.html">Sign Out</a>
+            <a id="signout" href="/">Sign Out</a>
         </div>
     </div>
     
     <div class="wrapper">
-        
-        
         <% if (boards && boards.length > 0) { %>
             <% boards.forEach(board => { %>
-              <!-- Use anchor tags with href attribute -->
-              <div>
-                <!-- Update the href attribute to point to /homepage with the board ID as a query parameter -->
-                <a href="/homepage?boardId=<%= encodeURIComponent(board.boardID) %>">
+                <!-- Converted anchor tags to Bootstrap buttons -->
+                <button type="button" class="btn btn-primary" onclick="location.href='/homepage?boardId=<%= encodeURIComponent(board.boardID) %>'">
                   <%= board.boardName %>
-                </a>
-              </div>
+                </button>
             <% }); %>
-          <% } else { %>
+        <% } else { %>
             <div>No clubs found.</div>
-          <% } %>
-        
-      
+        <% } %>
     </div>
 
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#formModal">

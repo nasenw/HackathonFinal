@@ -87,27 +87,27 @@ body {
   }
   
   .wrapper {
-    justify-content: center;
-    border: 2px solid #f76707;
-    border-radius: 5px;
-    background-color: #fff4e6;
-  }
-  
-  .wrapper > div {
-    border: 2px solid #ffa94d;
-    border-radius: 5px;
-    background-color: #ffd8a8;
-    padding: 1em;
-    color: #d9480f;
-  }
-  
-  .wrapper {
-    margin-top: 100px;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+    gap: 20px;
+    padding: 20px; 
+    margin-top: 20px; 
+    width: calc(100% - 40px); 
+    box-shadow: 0 0 10px rgba(0,0,0,0.1); 
+    border-radius: 10px; 
+    background-color: #fff; 
   }
+  
+.wrapper > div {
+    border: none; 
+    border-radius: 5px; 
+    background-color: #e7e7e7; 
+    padding: 20px; 
+    color: #333; 
+    text-align: center; 
+}
 
-  .btn {
-    margin-top: 200px;
-  }
+.btn-primary {
+    background-color: #600000;
+    border-color: #600000; 
+}
