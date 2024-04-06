@@ -113,6 +113,28 @@ console.log(req.session.user);
 res.redirect('/landing');
 });
 
+router.get('/graphPage', async (req, res, next) => {
+  const boardId = req.query.boardId;
+
+  await Board.findBoard(boardId)
+    .then(board => {
+      if (board) {
+        res.render('graph', { board: board });
+      } 
+    })
+})
+
+router.get('/purchaseRequest', async (req, res, next) => {
+  const boardId = req.query.boardId;
+
+  await Board.findBoard(boardId)
+    .then(board => {
+      if (board) {
+        res.render('inventory', { board: board });
+      } 
+    })
+})
+
   
 
 router.get('/landing', async (req, res, next) => {
