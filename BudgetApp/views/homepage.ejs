@@ -11,64 +11,64 @@
     <div id="title">
       <div class="title--grid">
         <h2>CampusCommerce</h2>
-        <a id="news" href="https://www.mccormick.northwestern.edu/academics/apply.html">News & Events</a>
-        <a id="contact" href="https://www.mccormick.northwestern.edu/academics/apply.html">Contact & Visit</a>
-        <a id="info" href="https://www.mccormick.northwestern.edu/academics/apply.html">|Info For</a>
+        <a id="news" href="/">News & Events</a>
+        <a id="contact" href="/">Contact & Visit</a>
+        <a id="info" href="/">|Sign Out</a>
       </div>
     </div>
     <div id="Organization">
        <h1><%= board.boardName %></h1>
     </div>
+    
     <div id="navcontainer">
-    <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <a class="navbar-brand" href="#"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item dropdown">
+      <nav class="navbar navbar-expand-lg navbar-light bg-white">
+          <a class="navbar-brand" href="#"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    ABOUT
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Club Information</a>
+                  </div>
+                </li>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    INVENTORY
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Current Orders</a>
+                    <a class="dropdown-item" href="#">Order History</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Tracking</a>
+                  </div>
+                </li>
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  ABOUT
+                  PURCHASING
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Purchase Request</a>
                   <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
+                  <a class="dropdown-item" href="#">Current Requests</a>
                 </div>
               </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  INVENTORY
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Action</a>
-                  <a class="dropdown-item" href="#">Another action</a>
-                  <div class="dropdown-divider"></div>
-                  <a class="dropdown-item" href="#">Something else here</a>
-                </div>
-              </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                VENDORS
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  COST 
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="/olyPage?boardId=<%= encodeURIComponent(board.boardID) %>">Stats</a>                  
-                </div>
-              </li>
-          </ul>
+              <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    FINANACE
+                  </a>
+                  <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="#">Funding</a>
+                    <a class="dropdown-item" href="#">Expenditure</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">Chart</a>
+                  </div>
+                </li>
+            </ul>
 
           <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
