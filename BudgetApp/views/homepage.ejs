@@ -52,7 +52,40 @@
                   PURCHASING
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <a class="dropdown-item" href="#">Purchase Request</a>
+                  <a class="dropdown-item" href="#">Purchase Request
+                    
+                  </a>
+                  <script>
+                    document.getElementById('purchaseRequestLink').addEventListener('click', function(e) {
+                      e.preventDefault(); // Prevent the default anchor behavior
+                      
+                      const contentContainer = document.querySelector('.container--grid'); // Select your content container
+                      // Generate the HTML for the purchase request form
+                      contentContainer.innerHTML = `
+                        <form id="purchaseRequestForm">
+                          <h2>Purchase Request Form</h2>
+                          <div>
+                            <label for="item">Item Name:</label>
+                            <input type="text" id="item" name="item" required>
+                          </div>
+                          <div>
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" id="quantity" name="quantity" required>
+                          </div>
+                          <div>
+                            <label for="reason">Reason for Purchase:</label>
+                            <textarea id="reason" name="reason" required></textarea>
+                          </div>
+                          <div>
+                            <label for="dateNeeded">Date Needed:</label>
+                            <input type="date" id="dateNeeded" name="dateNeeded" required>
+                          </div>
+                          <button type="submit">Submit Request</button>
+                        </form>
+                      `;
+                      // Add any additional JavaScript for form validation or submission here
+                    });
+                  </script>
                   <div class="dropdown-divider"></div>
                   <a class="dropdown-item" href="#">Current Requests</a>
                 </div>
@@ -98,7 +131,9 @@
             </div>
             <div class="club--projects"> 
             <h2><%= board.boardName %></h2>
+            <div class="club--description">
             <%= board.boardDescription %>
+            </div>
             </div>
         </div>
     </div>

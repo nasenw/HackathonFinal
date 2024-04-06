@@ -175,6 +175,11 @@ h2{
     padding-bottom: 20px;
 }
 
+.club--description {
+    word-wrap: break-word; /* Ensures words can break and wrap to the next line */
+    word-break: break-word; /* Allows breaking and wrapping of long unbroken strings */
+}
+
 .club--website{
     color:#600000;
     padding-top: 150px;
