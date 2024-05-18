@@ -45,6 +45,10 @@ Board.init({
   inventoryIDs: {
     type: DataTypes.STRING,
     allowNull: true
+  },
+  boardAdmins: {
+    type: DataTypes.STRING,
+    allowNull: false
   }
 }, {
   sequelize, 

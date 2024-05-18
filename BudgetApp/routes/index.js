@@ -75,6 +75,7 @@ router.post("/addBoard", async function (req, res, next) {
     boardEmail: req.body.boardEmail,
     boardPhoto: req.body.boardPhoto,
     boardPhone: req.body.boardPhone,
+    boardAdmins: req.session.user.userId
   });
 
   const user = req.session.user;
