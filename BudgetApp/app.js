@@ -52,7 +52,7 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-sequelize.sync({force: true}).then(()=>{ // force true
+sequelize.sync({}).then(()=>{ // force true
   console.log("Sequelize Sync Completed");
   // setup();
 })

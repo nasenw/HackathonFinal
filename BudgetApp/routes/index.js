@@ -2,6 +2,7 @@ var express = require("express");
 const User = require("../models/User");
 const Board = require("../models/Board");
 const bcrypt = require("bcrypt");
+const { authUser } = require("../middleware/auth")
 
 var router = express.Router();
 
@@ -13,13 +14,18 @@ const sessionChecker = (req, res, next) => {
   }
 };
 
-/* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index");
 });
 
 router.get("/signup", (req, res, next) => {
   res.render("signup");
+});
+
+router.get("/signout", (req, res, next) => {
+  req.session.destroy();
+  res.clearCookie('connect.sid');
+  res.render("index");
 });
 
 router.get("/index", (req, res, next) => {
@@ -43,15 +49,6 @@ router.post("/user-signedup", async function (req, res, next) {
   } else {
     console.log("User already in database");
   }
-
-  // const user = await User.findUser(req.body.username, req.body.password)
-  // if(user!== null){
-  //   req.session.user = user
-  //   res.redirect("/courses")
-  // }else{
-  //   res.redirect("/?msg=fail")
-  // }
-
   res.redirect("index");
 });
 
@@ -91,26 +88,6 @@ router.post("/addBoard", async function (req, res, next) {
   res.redirect("/landing");
 });
 
-router.get("/graphPage", async (req, res, next) => {
-  const boardId = req.query.boardId;
-
-  await Board.findBoard(boardId).then((board) => {
-    if (board) {
-      res.render("graph", { board: board });
-    }
-  });
-});
-
-router.get("/purchaseRequest", async (req, res, next) => {
-  const boardId = req.query.boardId;
-
-  await Board.findBoard(boardId).then((board) => {
-    if (board) {
-      res.render("inventory", { board: board });
-    }
-  });
-});
-
 router.get("/landing", async (req, res, next) => {
   const boards = await User.getBoards(req.session.user);
   console.log(boards + "--------------");
@@ -130,7 +107,28 @@ router.get("/landing", async (req, res, next) => {
   res.render("landing", { boards: boardsArray });
 });
 
-router.get("/olyPage", async (req, res, next) => {
+// ----------------------------------------------------------------- Add Authentication For Below Pages ------------------------------------------------- //
+
+router.get("/graphPage", authUser, async (req, res, next) => {
+  const boardId = req.query.boardId;
+
+  await Board.findBoard(boardId).then((board) => {
+    if (board) {
+      res.render("graph", { board: board });
+    }
+  });
+});
+
+router.get("/purchaseRequest", authUser, async (req, res, next) => {
+  const boardId = req.query.boardId;
+
+  const board = await Board.findBoard(boardId);
+  if (board) {
+    res.render("inventory", { board: board });
+  }
+});
+
+router.get("/olyPage", authUser, async (req, res, next) => {
   const boardId = req.query.boardId;
 
   await Board.findBoard(boardId).then((board) => {
@@ -140,26 +138,13 @@ router.get("/olyPage", async (req, res, next) => {
   });
 });
 
-router.get("/homepage", async (req, res, next) => {
+router.get("/homepage", authUser, async (req, res, next) => {
   const boardId = req.query.boardId;
 
-  // Use the boardId to fetch the corresponding data
-  // Example: Fetch data for the specified boardId
-  await Board.findBoard(boardId)
-    .then((board) => {
-      if (board) {
-        // Render the homepage with the fetched data
-        res.render("homepage", { board: board });
-      } else {
-        // Handle the case where the board with the specified ID was not found
-        res.status(404).send("Board not found");
-      }
-    })
-    .catch((err) => {
-      // Handle errors that occur during data fetching
-      console.error("Error fetching board:", err);
-      res.status(500).send("Internal Server Error");
-    });
+  const board = await Board.findBoard(boardId);
+  if (board) {
+    res.render("homepage", { board: board });
+  }
 });
 
 module.exports = router;
