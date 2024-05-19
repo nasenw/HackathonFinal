@@ -8,6 +8,37 @@ class Board extends Model {
         const boards = await Board.findByPk(board);
         return boards;
     }
+
+    static async getUsers(board)
+    {
+      const list = board.boardMembers;
+      console.log(list + "LIST")
+      console.log(board + "BOARD")
+      if (list !== null)
+      {
+        const realList = list.split(',');
+        return realList;
+      }
+    }
+
+    
+
+    static async isAdmin(boardID, user)
+    {
+      const boards = await Board.findByPk(boardID);
+      const list = boards.boardAdmins;
+      console.log(list);
+      if (list !== null)
+      {
+        const realList = list.split(',');
+        console.log(realList + "-----" + user)
+        if (realList.includes(user) || realList == user)
+        {
+          return true
+        }
+      }
+      return false;
+    }
 }
 
 Board.init({
@@ -47,6 +78,10 @@ Board.init({
     allowNull: true
   },
   boardAdmins: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  boardMembers: {
     type: DataTypes.STRING,
     allowNull: false
   }

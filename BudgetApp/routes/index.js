@@ -34,8 +34,9 @@ router.get("/index", (req, res, next) => {
 
 router.post("/user-signedup", async function (req, res, next) {
   const existing = await User.findUser(req.body.email);
+  const validateUser = await User.validateUsername(req.body.username); // Validate by username instead of email, right now im just making sure its unique
   console.log(existing + "Yooo");
-  if (existing == null) {
+  if (existing == null && validateUser === false) {
     const saltRounds = 10;
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -44,6 +45,7 @@ router.post("/user-signedup", async function (req, res, next) {
       firstName: req.body.firstName,
       lastName: req.body.lastName,
       email: req.body.email,
+      username: req.body.username,
       password: hashedPassword,
     });
   } else {
@@ -75,7 +77,8 @@ router.post("/addBoard", async function (req, res, next) {
     boardEmail: req.body.boardEmail,
     boardPhoto: req.body.boardPhoto,
     boardPhone: req.body.boardPhone,
-    boardAdmins: req.session.user.userId
+    boardAdmins: req.session.user.userId,
+    boardMembers: req.session.user.userId
   });
 
   const user = req.session.user;
@@ -106,6 +109,12 @@ router.get("/landing", async (req, res, next) => {
   }
 
   res.render("landing", { boards: boardsArray });
+});
+
+router.post("/joinBoard", async (req, res, next) => { // Make this a fetch later so just the club page refreshes
+  const joined = await User.JoinBoard(req.session.user, req.body.boardName);
+  
+  res.redirect('/landing');
 });
 
 // ----------------------------------------------------------------- Add Authentication For Below Pages ------------------------------------------------- //
@@ -144,7 +153,21 @@ router.get("/homepage", authUser, async (req, res, next) => {
 
   const board = await Board.findBoard(boardId);
   if (board) {
-    res.render("homepage", { board: board });
+    const isAdmin = await Board.isAdmin(boardId, req.session.user.userId);
+    const users = await Board.getUsers(board);
+    let userList = []; 
+    if (users && Array.isArray(users)) {
+      console.log("TRUEEEE");
+      for (const clubMember of users) {
+        let adminStatus = await Board.isAdmin(boardId, clubMember)
+        if (adminStatus !== true)
+        {
+          const user = await User.findByPk(clubMember);
+          userList.push(user); 
+        }
+      }
+    }
+    res.render("homepage", { board: board, isAdmin: isAdmin, users: userList });
   }
 });
 

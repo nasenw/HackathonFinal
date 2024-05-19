@@ -1,6 +1,6 @@
 const sequelize = require('../db')
 const bcrypt = require('bcrypt');
-
+const Board = require('./Board')
 const { Model, DataTypes } = require('sequelize')
 
 class User extends Model {
@@ -22,6 +22,24 @@ class User extends Model {
             return null
         }
     }
+
+    static async validateUsername(username){
+      try {
+        const user = await User.findOne({
+          where: {
+            username: username
+          }
+        });
+          console.log(user + " " + username);
+          if(user){
+              return true
+          }else{
+              return false
+          }
+      } catch (error) {
+          return null
+      }
+  }
 
     static async getBoards(user)
     {
@@ -46,15 +64,47 @@ class User extends Model {
         });
       }
       else{
-
-      
       jane.set({
         boardIDs: board.boardID
       });
     }
-      
       await jane.save();
     }
+
+    static async JoinBoard(user, board)
+    {
+      const jane = await User.findByPk(user.userId);
+      const boardExists = await Board.findByPk(board);
+      console.log(user.userId + " " + board)
+      if (boardExists !== null){
+        if (jane.boardIDs !== null)
+        {
+          if (!jane.boardIDs.includes(boardExists.boardID)){
+            jane.set({
+              boardIDs: jane.boardIDs +"," + board
+            });
+            boardExists.set({
+              boardMembers: boardExists.boardMembers +"," + user.userId
+            })
+          }
+        }
+        else{
+          jane.set({
+            boardIDs: board
+          });
+          boardExists.set({
+            boardMembers: boardExists.boardMembers +"," + user.userId
+          })
+          
+        }
+        await jane.save();
+        await boardExists.save();
+      }
+      else {
+        console.log("Error: Board Not Found");
+      }
+    }
+
 
     static async validateUser(email, password)
     {
@@ -83,6 +133,11 @@ User.init({
     autoIncrement: true,
     primaryKey: true,
     allowNull: false
+  },
+  username: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
   },
   email: {
     type: DataTypes.STRING,
