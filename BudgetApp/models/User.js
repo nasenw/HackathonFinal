@@ -39,7 +39,7 @@ class User extends Model {
       } catch (error) {
           return null
       }
-  }
+    }
 
     static async getBoards(user)
     {

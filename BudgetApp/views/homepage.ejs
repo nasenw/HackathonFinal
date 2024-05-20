@@ -133,9 +133,10 @@
                           <select name="member" id="memberList"> <!-- Change to checkboxes later for easier adding of multiple admins -->
                               <!-- <option value="Select a Member">Select a Member</option> -->
                               <% users.forEach(user => { %>
-                                <option value="<% user.username %>">User: <%= user.firstName %> <%= user.lastName %></option>
+                                <option value="<%= user.userId %>">User: <%= user.firstName %> <%= user.lastName %></option>
                               <% }); %>
                           </select>
+                          <input name="boardID" hidden="true" value="<%= board.boardID %>"></input>
                       </div>
                       <input type="submit" value="Set as Admin">
                   </form>

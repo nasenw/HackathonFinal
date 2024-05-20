@@ -1,5 +1,6 @@
 const sequelize = require('../db')
 const { Model, DataTypes } = require('sequelize')
+const User = require('./User')
 
 class Board extends Model {
 
@@ -12,13 +13,49 @@ class Board extends Model {
     static async getUsers(board)
     {
       const list = board.boardMembers;
-      console.log(list + "LIST")
-      console.log(board + "BOARD")
+
       if (list !== null)
       {
         const realList = list.split(',');
         return realList;
       }
+    }
+
+    static async getAdmins(board)
+    {
+      console.log("BOARD: " + board)
+      console.log("BOARD ADMINS: " + board.boardAdmins)
+      const list = board.boardAdmins;
+      if (list !== null)
+      {
+        const realList = list.split(',');
+        return realList;
+      }
+    }
+
+    static async AddAdmin(boardId, userId)
+    {
+      const board = await Board.findByPk(boardId);
+      console.log("BOARDID ADDADMIN: " + boardId)
+      console.log("BOARD ADDADMIN: " + board)
+      const boardAdminList = await Board.getAdmins(board);
+      console.log("user.userID: " + userId)
+      if (!boardAdminList.includes(userId))
+      {
+        if (board.boardAdmins === null)
+        {
+          board.set({
+            boardAdmins: userId
+          })
+        }
+        else { 
+          board.set({
+            boardAdmins: board.boardAdmins +"," + userId
+          })
+        }
+        await board.save();
+      }
+
     }
 
     
@@ -29,11 +66,13 @@ class Board extends Model {
       const list = boards.boardAdmins;
       console.log(list);
       if (list !== null)
-      {
+      { 
+        console.log("Checking if Admin")
         const realList = list.split(',');
         console.log(realList + "-----" + user)
-        if (realList.includes(user) || realList == user)
+        if (realList.includes(String(user)))
         {
+          console.log("IS AN ADMIN!")
           return true
         }
       }

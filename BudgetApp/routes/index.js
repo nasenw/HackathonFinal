@@ -153,11 +153,9 @@ router.get("/homepage", authUser, async (req, res, next) => {
 
   const board = await Board.findBoard(boardId);
   if (board) {
-    const isAdmin = await Board.isAdmin(boardId, req.session.user.userId);
     const users = await Board.getUsers(board);
     let userList = []; 
     if (users && Array.isArray(users)) {
-      console.log("TRUEEEE");
       for (const clubMember of users) {
         let adminStatus = await Board.isAdmin(boardId, clubMember)
         if (adminStatus !== true)
@@ -167,8 +165,19 @@ router.get("/homepage", authUser, async (req, res, next) => {
         }
       }
     }
+    const isAdmin = await Board.isAdmin(boardId, req.session.user.userId);
+    console.log("FINAL: IS AN ADMIN == " + isAdmin)
     res.render("homepage", { board: board, isAdmin: isAdmin, users: userList });
   }
+});
+
+router.post("/setAdmin", async (req, res, next) => {
+  const boardId = req.body.boardID
+  console.log(boardId)
+  const member = req.body.member;
+  await Board.AddAdmin(boardId, member);
+
+  res.redirect("/landing");
 });
 
 module.exports = router;
