@@ -1,6 +1,8 @@
 var express = require("express");
 const User = require("../models/User");
 const Board = require("../models/Board");
+const PRItems = require("../models/PRItems");
+const Orders = require("../models/Orders");
 const bcrypt = require("bcrypt");
 const { authUser } = require("../middleware/auth")
 
@@ -129,8 +131,51 @@ router.get("/graphPage", authUser, async (req, res, next) => {
   });
 });
 
+router.post("/clubPurchaseRequest", async (req, res, next) => {
+  const boardId = req.body.boardID;
+
+  // Add items -- Ill fix this mess later surely
+  let retailers = req.body['retailer[]'];
+  let itemNames = req.body['itemName[]'];
+  let partNumbers = req.body['partNumber[]'];
+  let prices = req.body['price[]'];
+  let quantitys = req.body['quantity[]'];
+  let links = req.body['link[]'];
+  let partNotes = req.body['notes[]'];
+
+  let itemList = []
+  console.log(retailers);
+  
+  for (let i = 0; i < retailers.length; i++)
+  {
+    var newPart = await PRItems.create({
+      PartRetailer: retailers[i],
+      PartName: itemNames[i],
+      PartNumber: partNumbers[i],
+      PartPrice: prices[i],
+      PartAmountRequested: quantitys[i],
+      PartLink: links[i],
+      PartNotes: partNotes[i]
+    });
+    console.log(newPart.ID);
+    itemList.push(newPart.ID);
+  }
+
+  let fixedItemList = itemList.join(', ');
+  // Add order
+  await Orders.create({
+    ClubID: boardId,
+    ItemIDs: fixedItemList,
+    ClubID: boardId
+  })
+  res.redirect('/purchaseRequest?boardId=' + boardId + "&success=true");
+}); 
+
+
 router.get("/purchaseRequest", authUser, async (req, res, next) => {
   const boardId = req.query.boardId;
+  const success = req.query.success;
+
 
   const board = await Board.findBoard(boardId);
   if (board) {

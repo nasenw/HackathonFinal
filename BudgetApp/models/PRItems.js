@@ -1,44 +1,52 @@
 const sequelize = require('../db')
 const { Model, DataTypes } = require('sequelize')
 
-class PurchaseRequests extends Model {
+class PRItems extends Model {
     static async getItems(){
-        const items = await PurchaseRequests.findAll();
+        const items = await PRItems.findAll();
         return items;
     }
 }
 
-PurchaseRequests.init({
+PRItems.init({
   ID: {
     type: DataTypes.INTEGER,
     primaryKey: true,
     autoIncrement: true,
     allowNull: false
   },
-  PartID: {
+  PartName: {
     type: DataTypes.STRING,
     allowNull: false
   },
-  PartName: {
+  PartNumber: {
     type: DataTypes.STRING,
     allowNull: true
   },
-  PartVendor: {
+  PartRetailer: {
     type: DataTypes.STRING,
     allowNull: false
   },
   PartPrice: {
-    type: DataTypes.STRING,
+    type: DataTypes.DECIMAL(10,2),
     allowNull: false
   },
   PartAmountRequested: {
     type: DataTypes.DOUBLE,
     allowNull: false,
-    defaultValue: 0
+  },
+  PartLink: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  PartNotes: {
+    type: DataTypes.STRING,
+    allowNull: false
   },
   OrderedStatus: {
-    type: DataTypes.BOOLEAN,
-    allowNull: false
+    type: DataTypes.STRING,
+    allowNull: true,
+    defaultValue: false
   },
   EstimatedArrival: {
     type: DataTypes.STRING,
@@ -46,7 +54,7 @@ PurchaseRequests.init({
   }
 }, {
   sequelize, 
-  modelName: 'PurchaseRequests'
+  modelName: 'PRItems'
 });
 
-module.exports = PurchaseRequests
+module.exports = PRItems
